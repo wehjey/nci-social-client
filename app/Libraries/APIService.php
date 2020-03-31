@@ -6,13 +6,9 @@ class APIService {
 
     public static function login($data)
     {
-        $response = self::makeRequest($data, '/login', 'POST');
-        if ($response['success']) {
-            session(['token' => $response['access_token']]); // Store access token in session
-            session(['user' => $response]); // Store the user information in session
-        }
-        return $response;
+        return self::makeRequest($data, '/login', 'POST');
     }
+    
     public static function register($data)
     {
         $response = self::makeRequest($data, '/register', 'POST');

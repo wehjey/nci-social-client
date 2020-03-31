@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.auth', ['title' => 'Register'])
 
 @section('content')
 
@@ -23,6 +23,7 @@
     
     
     <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    <a href="{{route('login')}}">Click here if you have an account</a>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 </form>
 

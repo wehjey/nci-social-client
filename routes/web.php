@@ -25,3 +25,4 @@ Route::get('login', 'AuthController@showLoginForm')->name('login');
 Route::post('login', 'AuthController@submitLogin');
 Route::get('register', 'AuthController@showRegisterForm')->name('register');
 Route::post('register', 'AuthController@submitRegister');
+Route::get('signout', 'AuthController@signOut');

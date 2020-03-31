@@ -18,8 +18,14 @@ class AuthController extends Controller
 
         $response = APIService::login($credentials); // Make login request to API with user credentials
 
-        session(['user' => $response]); // Store the user information in session
-
+        if ($response['success']) {
+            $data = $response['data']; // Get user data
+            session(['token' => $response['access_token']]); // Store access token in session
+            session(['user' => $data]); // Store access token in session
+            return redirect('/');
+        } else {
+            return back()->with('error', 'Sorry your credentials are invalid. Please try again!');
+        }
     }
     
     public function showRegisterForm()
@@ -34,5 +40,16 @@ class AuthController extends Controller
         $response = APIService::register($credentials); // Make login request to API with user credentials
     }
 
-
+    /**
+     * Sign user out and delete session data
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function signOut(Request $request)
+    {
+        $request->session()->forget('token');
+        $request->session()->forget('user');
+        return redirect('login')->with('success', "You've signed out successfully");
+    }
 }
