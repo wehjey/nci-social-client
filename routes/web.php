@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth.login')->group(function(){
+
+    /**
+     * Topics
+     */
+    Route::get('/', 'HomeController@home');
 });
 
-Route::get('login', 'AuthController@showLoginForm');
+Route::get('login', 'AuthController@showLoginForm')->name('login');
 Route::post('login', 'AuthController@submitLogin');
-Route::get('register', 'AuthController@showRegisterForm');
+Route::get('register', 'AuthController@showRegisterForm')->name('register');
 Route::post('register', 'AuthController@submitRegister');
