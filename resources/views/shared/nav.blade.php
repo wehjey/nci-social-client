@@ -12,7 +12,7 @@
             <a class="nav-link" href="{{url('/')}}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url('/')}}">Shop</a>
+            <a class="nav-link" href="{{url('shop')}}">Shop</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="post.html">Student Affairs</a>

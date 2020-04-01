@@ -18,7 +18,12 @@ Route::middleware('auth.login')->group(function(){
     /**
      * Topics
      */
-    Route::get('/', 'HomeController@home');
+    Route::get('/', 'TopicController@home');
+    Route::get('topic/{id}', 'TopicController@show');
+    Route::post('topic', 'TopicController@store');
+    Route::get('comment-remove/{comment_id}', 'TopicController@removeComment');
+    Route::post('comment', 'TopicController@makeComment');
+    Route::get('shop', 'ShopController@show');
 });
 
 Route::get('login', 'AuthController@showLoginForm')->name('login');
