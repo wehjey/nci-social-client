@@ -89,7 +89,7 @@ class ShopController extends Controller
         ];
 
         $response = APIService::orderProduct($order); // Order for product
-        dd($response);
+        
         if ($response['success']) {
             $url = $response['data'];
             return redirect()->to($url);
