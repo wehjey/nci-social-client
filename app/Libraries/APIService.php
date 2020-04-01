@@ -81,6 +81,62 @@ class APIService {
     }
 
     /**
+     * Get categories
+     *
+     * @return void
+     */
+    public static function getCategories()
+    {
+        return self::makeRequest(
+            [], 
+            "/categories", 
+            'GET'
+        );
+    }
+
+    /**
+     * Get products
+     *
+     * @return void
+     */
+    public static function getProducts()
+    {
+        return self::makeRequest(
+            [], 
+            '/products', 
+            'GET'
+        );
+    }
+
+    /**
+     * Get product
+     *
+     * @return void
+     */
+    public static function getProduct($product_id)
+    {
+        return self::makeRequest(
+            [], 
+            "/product/{$product_id}", 
+            'GET'
+        );
+    }
+
+    /**
+     * Order product
+     *
+     * @return void
+     */
+    public static function orderProduct($order)
+    {
+        return self::makeRequest(
+            $order, 
+            "/order", 
+            'POST'
+        );
+    }
+
+    /**
      * Make comment
      *
      * @param array $data

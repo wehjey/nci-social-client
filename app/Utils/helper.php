@@ -49,3 +49,17 @@ function getTotalComments($topic)
 {
   return $topic['comments_count'];
 }
+
+/**
+ * Return thumbnail image for product
+ *
+ * @param [type] $product
+ * @return string
+ */
+function getImage($product)
+{
+  if(count($product['images']) > 0) {
+    return $product['images'][0]['image_url'];
+  } 
+  return 'https://via.placeholder.com/100';
+}

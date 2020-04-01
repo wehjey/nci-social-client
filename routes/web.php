@@ -23,7 +23,14 @@ Route::middleware('auth.login')->group(function(){
     Route::post('topic', 'TopicController@store');
     Route::get('comment-remove/{comment_id}', 'TopicController@removeComment');
     Route::post('comment', 'TopicController@makeComment');
+
+    /**
+     * Shop
+     */
     Route::get('shop', 'ShopController@show');
+    Route::get('category/{id}', 'ShopController@getProductsByCategory');
+    Route::get('product/{id}', 'ShopController@viewProduct');
+    Route::get('order/{id}', 'ShopController@makeOrder');
 });
 
 Route::get('login', 'AuthController@showLoginForm')->name('login');
