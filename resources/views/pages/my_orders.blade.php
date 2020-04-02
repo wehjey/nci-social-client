@@ -49,6 +49,8 @@
               <div class="tab-pane fade show active" id="order" role="tabpanel" aria-labelledby="orders-tab">
                 <br>
 
+                @include('shared.alerts')
+
                 <div id="accordion">
                   <div class="card">
                     <div class="card-header" id="headingOne">

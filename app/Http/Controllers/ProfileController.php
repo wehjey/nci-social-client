@@ -82,6 +82,10 @@ class ProfileController extends Controller
             'sales' => $sales,
         ];
 
+        if(request()->has('success') && request('success') == 'true') {
+            request()->session()->flash('success', 'Order completed successfully');
+        }
+
         return view('pages.my_orders', $data);
     }
 
