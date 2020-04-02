@@ -40,9 +40,41 @@ class ShopController extends Controller
         return view('pages.shop', $data);
     }
 
-    public function getProductsByCategory(Request $request)
+    public function getProductsByCategory($category_id)
     {
+        if(!isset($category_id)) {
+            return back();
+        }
 
+        $category = '';
+        if (request()->has('category') && request('category') != '') {
+            $category = request('category');
+        }
+
+        $current_page = getPage();
+        $url = "/products/category/{$category_id}?per_page=10&page={$current_page}";
+        $response  = APIService::makeRequest([], $url, 'GET');
+        $products = [];
+        $products = [];
+        $total_pages = 0;
+        $total_count = 0;
+
+
+        if ($response['success']) {
+            $products = $response['data']['data'];
+            $total_pages = getPageCount($response['per_page'], $response['total_count']);
+            $total_count = $response['total_count'];
+        }
+
+        $data = [
+            'products' => $products,
+            'total_pages' => $total_pages,
+            'current_page' => $current_page,
+            'total_count' => $total_count,
+            'category' => $category
+        ];
+
+        return view('pages.category_product', $data);
     }
 
     /**
@@ -95,6 +127,38 @@ class ShopController extends Controller
             return redirect()->to($url);
         } else {
             return redirect('/');
+        }
+    }
+
+    public function addProduct(Request $request)
+    {
+        $data = $request->only(['name', 'description', 'images', 'quantity', 'price', 'category_id']);
+
+        $response = APIService::addProduct($data); // Post product
+
+        if ($response->success) {
+            return back()->with('success', 'Product added successfully');
+        } else {
+            return back()->with('error', 'Failed to add product. Please try again');
+        }
+    }
+
+    public function deleteProduct(Request $request)
+    {
+        if (isset($request['id'])) {
+            $product_id = (int) request('id');
+        } else {
+            return redirect('/');
+        }
+
+        $url = "/product/{$product_id}";
+
+        $response = APIService::makeRequest([], $url, 'DELETE'); // delete comment
+
+        if ($response['success']) {
+            return back()->with('success', 'Product deleted successfully');
+        } else {
+            return back()->with('error', 'Failed to delete product. Please try again');
         }
     }
 }

@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>NCI Social Marketplace <i class="fa fa-shopping-bag" aria-hidden="true"></i></h1>
+            <h1>{{$category}} <i class="fa fa-shopping-bag" aria-hidden="true"></i></h1>
           </div>
         </div>
       </div>
@@ -29,15 +29,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-10 mx-auto">
 
-          <h3 class="section-heading float-left" style="margin:20px 0">Products ({{$total_count}})</h3>
-
-          <div class="float-right">
-            @foreach ($categories as $cat)
-            <a href="{{url('category/'.$cat['id'].'?category='.$cat['name'])}}" class="btn btn-dark">{{$cat['name']}}</a>
-            @endforeach
-          </div>
-
-          <div class="clearfix"></div>
+          <h3 class="section-heading" style="margin:20px 0">Products ({{$total_count}})</h3>
 
           <hr>
           <div class="row">
@@ -58,7 +50,6 @@
             </div>
             @endforeach
           </div>
-
           <div class="clearfix">
             {{-- <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a> --}}
             <nav id="pagination" class="pagination"></nav>
@@ -78,7 +69,7 @@
         // other options
       });
 
-      $('#pagination').twbsPagination({
+       $('#pagination').twbsPagination({
           totalPages: {{$total_pages}},
           startPage: {{$current_page}},
           visiblePages: 7,

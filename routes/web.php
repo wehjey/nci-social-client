@@ -20,6 +20,7 @@ Route::middleware('auth.login')->group(function(){
      */
     Route::get('/', 'TopicController@home');
     Route::get('topic/{id}', 'TopicController@show');
+    Route::get('delete-topic/{id}', 'TopicController@delete');
     Route::post('topic', 'TopicController@store');
     Route::get('comment-remove/{comment_id}', 'TopicController@removeComment');
     Route::post('comment', 'TopicController@makeComment');
@@ -30,7 +31,15 @@ Route::middleware('auth.login')->group(function(){
     Route::get('shop', 'ShopController@show');
     Route::get('category/{id}', 'ShopController@getProductsByCategory');
     Route::get('product/{id}', 'ShopController@viewProduct');
+    Route::get('delete-product/{id}', 'ShopController@deleteProduct');
+    Route::post('product', 'ShopController@addProduct');
     Route::get('order/{id}', 'ShopController@makeOrder');
+    
+    Route::get('my', 'ProfileController@profile');
+    Route::get('my/topics', 'ProfileController@topics');
+    Route::get('my/orders', 'ProfileController@orders');
+    Route::get('my/products', 'ProfileController@products');
+    Route::post('profile', 'ProfileController@updateProfile');
 });
 
 Route::get('login', 'AuthController@showLoginForm')->name('login');

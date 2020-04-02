@@ -45,6 +45,16 @@ function getAuthor($topic)
   return ucwords($user['firstname'] . ' '. $user['lastname']);
 }
 
+function getAuthorImage($topic)
+{
+  $user = $topic['user'];
+  if ($user['profile_url']) {
+      return $user['profile_url'];
+  }
+  return 'https://via.placeholder.com/100';
+
+}
+
 function getTotalComments($topic)
 {
   return $topic['comments_count'];

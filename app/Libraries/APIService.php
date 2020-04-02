@@ -99,11 +99,11 @@ class APIService {
      *
      * @return void
      */
-    public static function getProducts()
+    public static function getProducts($per_page, $page)
     {
         return self::makeRequest(
             [], 
-            '/products', 
+            "/products?per_page={$per_page}&page={$page}", 
             'GET'
         );
     }
@@ -212,6 +212,96 @@ class APIService {
         );
     }
 
+    /**
+     * Add product
+     *
+     * @param array $data
+     * @return void
+     */
+    public static function addProduct($data)
+    {
+        $output = [];
+        
+        if(isset($data['images'])) {
+            foreach ($data['images'] as $key => $value) {
+                if (! is_array($value)) {
+                    $output[] = [
+                        'name'     => 'images[]',
+                        'contents' => fopen($value->getPathname(), 'r'),
+                        'filename' => $value->getClientOriginalName()
+                        ];
+                    continue;
+                }
+            }
+        }
+
+        $output[] = [
+                'name'     => 'description',
+                'contents' => $data['description']
+            ];
+
+        $output[] = [
+                'name'     => 'name',
+                'contents' => $data['name']
+            ];
+        $output[] = [
+                'name'     => 'price',
+                'contents' => $data['price']
+            ];
+
+        $output[] = [
+                'name'     => 'quantity',
+                'contents' => $data['quantity']
+            ];
+        $output[] = [
+                'name'     => 'category_id',
+                'contents' => $data['category_id']
+            ];
+
+        return self::makeRequestFile(
+            $output, 
+            "/product", 
+            'POST'
+        );
+    }
+
+    /**
+     * Update profile
+     *
+     * @param array $data
+     * @return void
+     */
+    public static function updateProfile($data)
+    {
+        $output = [];
+        
+        $output[] = [
+            'name'     => 'profile_url',
+            'contents' => fopen($data['profile_url']->getPathname(), 'r'),
+            'filename' => $data['profile_url']->getClientOriginalName()
+            ];
+
+        $output[] = [
+                'name'     => 'firstname',
+                'contents' => $data['firstname']
+            ];
+
+        $output[] = [
+                'name'     => 'lastname',
+                'contents' => $data['lastname']
+            ];
+        $output[] = [
+                'name'     => 'phone_number',
+                'contents' => $data['phone_number']
+            ];
+
+        return self::makeRequestFile(
+            $output, 
+            "/profile", 
+            'POST'
+        );
+    }
+
     public static function makeRequest($data, $url, $method)
     {
         $curl = curl_init();
@@ -249,14 +339,21 @@ class APIService {
         return json_decode($response, true);
     }
 
-
+    /**
+     * Make api request with file uploaded
+     *
+     * @param [type] $data
+     * @param [type] $url
+     * @param [type] $method
+     * @return void
+     */
     public static function makeRequestFile($data, $url, $method)
     {
         $client = new Client([
             'base_uri'    => config('app.api_url'),
             ]);
 
-             $response = $client->request('POST', 'v1'.$url, [
+            $response = $client->request($method, 'v1'.$url, [
             'headers' => [
             'Authorization' => 'Bearer '. session('token')
             ],
@@ -265,7 +362,7 @@ class APIService {
             ]);
 
             $data = \GuzzleHttp\json_decode($response->getBody());
-
+            
         return $data;
     }
 
