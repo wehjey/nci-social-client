@@ -19,6 +19,7 @@
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
   <!-- Custom styles for this template -->
   <link href="{{url('main/css/clean-blog.css')}}" rel="stylesheet">
   <link href="{{url('main/css/pop.css')}}" rel="stylesheet">
@@ -45,6 +46,9 @@
   <script src="{{url('main/js/clean-blog.min.js')}}"></script>
   <script src="{{url('main/js/pop.js')}}"></script>
   <script src="{{url('js/pagination.js')}}"></script>
+
+  <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
   @yield('script')
 

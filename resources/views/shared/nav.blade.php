@@ -14,14 +14,14 @@
           <li class="nav-item">
             <a class="nav-link" href="{{url('shop')}}">Shop</a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link" href="post.html">Student Affairs</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="contact.html">Make Complaints</a>
-          </li>
+          </li> --}}
           <li class="nav-item">
-            <a class="nav-link" href="contact.html">My Account</a>
+            <a class="nav-link" href="{{url('my')}}">My Account</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{url('signout')}}">Sign Out</a>

@@ -33,12 +33,19 @@
         @foreach($topics as $topic)
         <div class="post-preview">
           <a href="{{url('topic/' . $topic['id'])}}">
-            <h2 class="post-title">
-              {{$topic['title']}}
-            </h2>
-            <h3 class="post-subtitle">
-              {{$topic['description']}}
-            </h3>
+            <div class="row">
+              <div class="col-2">
+                <img src="{{getAuthorImage($topic)}}" class="img-thumbnail" alt="">
+              </div>
+              <div class="col-10">
+                <h2 class="post-title">
+                  {{$topic['title']}}
+                </h2>
+                <h3 class="post-subtitle">
+                  {{$topic['description']}}
+                </h3>
+              </div>
+            </div>
           </a>
           <p class="post-meta">Posted by
             <a href="#">{{getAuthor($topic)}}</a>

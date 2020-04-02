@@ -52,6 +52,29 @@ class TopicController extends Controller
         }
     }
 
+    /**
+     * delete topic from api
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request)
+    {
+        if (isset($request['id'])) {
+            $topic_id = (int) request('id');
+        } else {
+            return redirect('/');
+        }
+
+        $response = APIService::makeRequest([], '/topic/'.$topic_id, 'DELETE'); // Get topic
+        
+        if (isset($response['success'])) {
+            return back()->with('success', 'Topic deleted successfully');
+        } else {
+             return back()->with('error', 'Failed to delete topic. Please try again');
+        }
+    }
+
     public function makeComment(Request $request)
     {
         $data = $request->only(['topic', 'comment', 'images']);
