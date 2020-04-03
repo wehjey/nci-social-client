@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libraries\APIService;
+use App\Http\Requests\RegisterRequest;
 
 class AuthController extends Controller
 {
@@ -33,11 +34,27 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function submitRegister(Request $request)
+    public function submitRegister(RegisterRequest $request)
     {
         $credentials = $request->only(['email', 'password','firstname','lastname','password_confirmation','phone_number','profile_url']);
 
         $response = APIService::register($credentials); // Make login request to API with user credentials
+
+        if ($response->success) {
+            $data = $response->data; // Get user data
+            $user = [
+                'firstname' => $data->firstname,
+                'lastname' => $data->lastname,
+                'email' => $data->email,
+                'phone_number' => $data->phone_number,
+                'profile_url' => $data->profile_url,
+            ];
+            session(['token' => $response->access_token]); // Store access token in session
+            session(['user' => $user]); // Store access token in session
+            return redirect('/');
+        } else {
+            return back()->with('error', $response->errors);
+        }
     }
 
     /**

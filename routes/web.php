@@ -31,6 +31,7 @@ Route::middleware('auth.login')->group(function(){
     Route::get('shop', 'ShopController@show');
     Route::get('category/{id}', 'ShopController@getProductsByCategory');
     Route::get('product/{id}', 'ShopController@viewProduct');
+    Route::post('product/edit', 'ShopController@editProduct');
     Route::get('delete-product/{id}', 'ShopController@deleteProduct');
     Route::post('product', 'ShopController@addProduct');
     Route::get('order/{id}', 'ShopController@makeOrder');
@@ -40,6 +41,9 @@ Route::middleware('auth.login')->group(function(){
     Route::get('my/orders', 'ProfileController@orders');
     Route::get('my/products', 'ProfileController@products');
     Route::post('profile', 'ProfileController@updateProfile');
+
+    Route::get('books', 'BookController@newBooks');
+    Route::get('books/search', 'BookController@searchBooks');
 });
 
 Route::get('login', 'AuthController@showLoginForm')->name('login');

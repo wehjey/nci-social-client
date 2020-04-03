@@ -38,12 +38,12 @@
                 <img src="{{getAuthorImage($topic)}}" class="img-thumbnail" alt="">
               </div>
               <div class="col-10">
-                <h2 class="post-title">
+                <h3 class="post-title" style="font-size: 1.6rem !important">
                   {{$topic['title']}}
-                </h2>
-                <h3 class="post-subtitle">
-                  {{$topic['description']}}
                 </h3>
+                <h5 class="post-subtitle" style="font-weight: 200 !important">
+                  {{$topic['description']}}
+                </h5>
               </div>
             </div>
           </a>

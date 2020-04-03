@@ -115,11 +115,11 @@
             <label for="file">Add Images</label>
             <input type="file" class="form-control" id="file" name="images[]" multiple>
           </div>
+          <button type="submit" id="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" id="submit" class="btn btn-primary">Submit</button>
       </div>
     </div>
   </div>
@@ -130,7 +130,7 @@
     <script>
         $('#pagination').twbsPagination({
             totalPages: {{$total_pages}},
-            startPage: {{$current_page}},
+            startPage: {{$total_pages > 0 ? $current_page : 0}},
             visiblePages: 7,
             onPageClick: function (event, page) {
                 window.location.href = "{{url()->current()}}?page=" + page
@@ -143,20 +143,20 @@
           // other options
         });
 
-        $('body').on('click', '#submit', function(){
-          if(validateForm()) {
-            $('#form').submit();
-          } else {
-            $('#error').toggleClass('d-none')
-          }
-        })
+        // $('body').on('click', '#submit', function(){
+        //   if(validateForm()) {
+        //     $('#form').submit();
+        //   } else {
+        //     $('#error').toggleClass('d-none')
+        //   }
+        // })
 
-        function validateForm() {
-          if ($('#title').val() == '' || $('#description').val() == '') {
-            return false;
-          }
-          return true;
-        }
+        // function validateForm() {
+        //   if ($('#title').val() == '' || $('#description').val() == '') {
+        //     return false;
+        //   }
+        //   return true;
+        // }
     </script>
     @include('shared.nav_script')
 @endsection

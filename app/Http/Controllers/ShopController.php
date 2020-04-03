@@ -143,6 +143,19 @@ class ShopController extends Controller
         }
     }
 
+    public function editProduct(Request $request)
+    {
+        $data = $request->only(['product_id', 'name', 'description', 'images', 'quantity', 'price', 'category_id']);
+
+        $response = APIService::editProduct($data); // Update product
+
+        if ($response->success) {
+            return back()->with('success', 'Product edited successfully');
+        } else {
+            return back()->with('error', 'Failed to edit product. Please try again');
+        }
+    }
+
     public function deleteProduct(Request $request)
     {
         if (isset($request['id'])) {

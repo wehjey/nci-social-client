@@ -72,7 +72,64 @@
                           <td>{{$product['price']}}</td>
                           <td>
                             @if(!$product['transactions_count'])
+                            <button id="modalBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$loop->iteration}}">
+                              Edit
+                            </button>
                             <a href="{{url('delete-product/'.$product['id'])}}" class="btn btn-danger text-white">Delete</a>
+                            <div class="modal fade" id="exampleModal{{$loop->iteration}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div id="error" class="alert alert-danger d-none" role="alert">
+                                          Please fill in all required fields
+                                      </div>
+                                    <form id="form" action="{{url('product/edit')}}" method="post" enctype="multipart/form-data">
+                                      @csrf
+                                      <input type="hidden" name="product_id" value="{{$product['id']}}">
+                                      <div class="form-group">
+                                        <label for="title">Category <i class="text-danger">*</i></label>
+                                        <select name="category_id" id="cat" class="form-control" required>
+                                          <option value="">Select category</option>
+                                          @foreach ($categories as $cat)
+                                              <option value="{{$cat['id']}}" {{$product['category_id'] == $cat['id'] ? 'selected' : ''}}>{{$cat['name']}}</option>
+                                          @endforeach
+                                        </select>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="title">Name <i class="text-danger">*</i></label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{$product['name']}}" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="description">Description <i class="text-danger">*</i></label>
+                                        <textarea type="text" class="form-control" rows="5" id="description" name="description" placeholder="Enter description" required>{{$product['description']}}</textarea>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="title">Quantity <i class="text-danger">*</i></label>
+                                        <input type="number" class="form-control" id="name" name="quantity" placeholder="Enter quantity" value="{{$product['quantity']}}" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="title">Price <i class="text-danger">*</i></label>
+                                        <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" value="{{$product['price']}}" required>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="file">Add Images <i class="text-danger">*</i></label>
+                                        <input type="file" class="form-control" id="file" name="images[]" multiple>
+                                      </div>
+                                      <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             @endif
                           </td>
                         </tr>

@@ -25,12 +25,46 @@ class APIService {
      */
     public static function register($data)
     {
-        $response = self::makeRequest($data, '/register', 'POST');
-        if ($response['success']) {
-            session(['token' => $response['access_token']]); // Store access token in session
-            session(['user' => $response]); // Store the user information in session
+        $output = [];
+        
+        if(isset($data['profile_url'])) {
+            $output[] = [
+                'name'     => 'profile_url',
+                'contents' => fopen($data['profile_url']->getPathname(), 'r'),
+                'filename' => $data['profile_url']->getClientOriginalName()
+            ];
         }
-        return $response;
+
+        $output[] = [
+                'name'     => 'firstname',
+                'contents' => $data['firstname']
+            ];
+        $output[] = [
+                'name'     => 'lastname',
+                'contents' => $data['lastname']
+            ];
+        $output[] = [
+                'name'     => 'email',
+                'contents' => $data['email']
+            ];
+        $output[] = [
+                'name'     => 'phone_number',
+                'contents' => $data['phone_number']
+            ];
+        $output[] = [
+                'name'     => 'password',
+                'contents' => $data['password']
+            ];
+        $output[] = [
+                'name'     => 'password_confirmation',
+                'contents' => $data['password_confirmation']
+            ];
+
+        return self::makeRequestFile(
+            $output,
+            "/register",
+            'POST'
+        );
     }
 
     /**
@@ -266,6 +300,63 @@ class APIService {
     }
 
     /**
+     * Edit product
+     *
+     * @param array $data
+     * @return void
+     */
+    public static function editProduct($data)
+    {
+        $output = [];
+        
+        if(isset($data['images'])) {
+            foreach ($data['images'] as $key => $value) {
+                if (! is_array($value)) {
+                    $output[] = [
+                        'name'     => 'images[]',
+                        'contents' => fopen($value->getPathname(), 'r'),
+                        'filename' => $value->getClientOriginalName()
+                        ];
+                    continue;
+                }
+            }
+        }
+
+        $output[] = [
+                'name'     => 'description',
+                'contents' => $data['description']
+            ];
+
+        $output[] = [
+                'name'     => 'name',
+                'contents' => $data['name']
+            ];
+        $output[] = [
+                'name'     => 'price',
+                'contents' => $data['price']
+            ];
+
+        $output[] = [
+                'name'     => 'quantity',
+                'contents' => $data['quantity']
+            ];
+        $output[] = [
+                'name'     => 'category_id',
+                'contents' => $data['category_id']
+            ];
+        $output[] = [
+                'name'     => 'product_id',
+                'contents' => $data['product_id']
+            ];
+
+        return self::makeRequestFile(
+            $output, 
+            "/product/edit/{$data['product_id']}", 
+            'POST'
+        );
+    }
+
+    /**
      * Update profile
      *
      * @param array $data
@@ -275,12 +366,14 @@ class APIService {
     {
         $output = [];
         
-        $output[] = [
+        if (isset($data['profile_url'])) {
+            $output[] = [
             'name'     => 'profile_url',
             'contents' => fopen($data['profile_url']->getPathname(), 'r'),
             'filename' => $data['profile_url']->getClientOriginalName()
             ];
-
+        }
+        
         $output[] = [
                 'name'     => 'firstname',
                 'contents' => $data['firstname']
@@ -353,15 +446,23 @@ class APIService {
             'base_uri'    => config('app.api_url'),
             ]);
 
+        try {
             $response = $client->request($method, 'v1'.$url, [
-            'headers' => [
-            'Authorization' => 'Bearer '. session('token')
-            ],
-            'multipart' => $data
+                'headers' => [
+                'Authorization' => 'Bearer '. session('token')
+                ],
+                'multipart' => $data
 
             ]);
 
-            $data = \GuzzleHttp\json_decode($response->getBody());
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getBody();
+
+            return json_decode($responseBodyAsString);
+        }
+
+        $data = \GuzzleHttp\json_decode($response->getBody());
             
         return $data;
     }

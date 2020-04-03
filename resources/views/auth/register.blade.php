@@ -4,8 +4,29 @@
 
 <form action="{{url('register')}}" method="POST" class="form-signin" enctype="multipart/form-data">
     @csrf
-    <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <img class="mb-4" src="{{url('images/logo.jpeg')}}" alt="" width="200" height="200">
+    <h1 class="h3 mb-3 font-weight-normal">Register with NCI Social</h1>
+
+    @if(count($errors) > 0)
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach($errors->all() as $message)
+            <li>{{$message}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+    @if(session('error'))
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach(session('error') as $error)
+                @foreach($error as $message)
+                <li>{{$message}}</li>
+                @endforeach
+            @endforeach
+        </ul>
+    </div>
+    @endif
     <label for="inputEmail" class="sr-only">Email address</label>
     <input type="email" id="inputEmail" class="form-control" name="email" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
@@ -17,7 +38,7 @@
     <label for="lastname" class="sr-only">Last name</label>
     <input type="text" id="inputlastname" class="form-control" name="lastname" placeholder="Last name" required>
     <label for="phone_number" class="sr-only">Phone number</label>
-    <input type="text" id="inputPhone_number" class="form-control" name="phone_number" placeholder="Phone number" required>
+    <input type="tel" id="inputPhone_number" class="form-control" name="phone_number" placeholder="Phone number" required>
     <label for="profile_url" class="sr-only">profile url</label>
     <input type="file" id="inputprofile_url" class="form-control" name="profile_url" placeholder="Profile url">
     
