@@ -107,8 +107,8 @@
             <label for="file">Add Images</label>
             <input type="file" class="form-control" id="file" name="images[]" multiple>
           </div>
+          <button type="submit" id="submit" class="btn btn-primary">Submit</button>
         </form>
-        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
