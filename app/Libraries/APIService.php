@@ -424,8 +424,6 @@ class APIService {
         $response = curl_exec($curl);
         $err = curl_error($curl);
         
-dd($response);
-
         if($err){
             // there was an error contacting the Paystack API
             die('Curl returned error: ' . $err);
