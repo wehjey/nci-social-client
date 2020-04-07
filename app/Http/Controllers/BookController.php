@@ -40,10 +40,8 @@ class BookController extends Controller
             'page' => $current_page,
         ];
 
-        dd($data);
-
         $response = APIService::makeRequest($data, '/books/search/', 'POST'); // Get topics from API
-
+        dd($response);
         $books = [];
         $total_pages = 0;
 
