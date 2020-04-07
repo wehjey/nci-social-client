@@ -98,7 +98,7 @@
 
       $(document).ready(function(){
         
-        const url = "http://{{config('app.api_url')}}/comments/topic/{{$topic['id']}}";
+        const url = "{{config('app.api_url')}}/comments/topic/{{$topic['id']}}";
 
         var headers = new Headers();
         headers.append('authorization', "Bearer {{session('token')}}");
